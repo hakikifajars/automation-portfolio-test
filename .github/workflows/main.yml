@@ -1,0 +1,48 @@
+name: Automation Portfolio Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+      - main
+
+jobs:
+  automation-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 23
+
+      - name: Give permission to Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Run all cucumber tests
+        run: xvfb-run ./gradlew clean test
+
+      - name: Run API tagged tests
+        run: ./gradlew apiTest
+
+      - name: Run Web tagged tests
+        run: xvfb-run ./gradlew webTest
+
+      - name: Upload Cucumber Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: build/reports/cucumber
+
+      - name: Upload Gradle Test Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gradle-test-report
+          path: build/reports/tests/test

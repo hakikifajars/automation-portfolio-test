@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.25.0'
+    testImplementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '5.9.2'
+
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '7.18.1'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.18.1'
+
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.4.0'
+    testImplementation group: 'org.json', name: 'json', version: '20240303'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+}
+
+test {
+    useJUnit()
+
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags", "")
+
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+tasks.register('apiTest', Test) {
+    useJUnit()
+    systemProperty "cucumber.filter.tags", "@api"
+
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+tasks.register('webTest', Test) {
+    useJUnit()
+    systemProperty "cucumber.filter.tags", "@web"
+
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
