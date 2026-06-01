@@ -3,21 +3,25 @@ package portfolio.web.pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import portfolio.web.utilities.DriverManager;
 
 public class LoginPage extends BasePage {
 
-    @FindBy(id = "user-name")
+    @FindBy(id = "login2")
+    private WebElement loginMenu;
+
+    @FindBy(id = "loginusername")
     private WebElement usernameField;
 
-    @FindBy(id = "password")
+    @FindBy(id = "loginpassword")
     private WebElement passwordField;
 
-    @FindBy(id = "login-button")
+    @FindBy(xpath = "//button[text()='Log in']")
     private WebElement loginButton;
 
-    @FindBy(css = "[data-test='error']")
-    private WebElement errorMessage;
+    @FindBy(id = "nameofuser")
+    private WebElement nameOfUser;
 
     public LoginPage() {
         super(DriverManager.getDriver());
@@ -25,7 +29,11 @@ public class LoginPage extends BasePage {
     }
 
     public void openLoginPage() {
-        driver.get("https://www.saucedemo.com/");
+        driver.get("https://www.demoblaze.com/");
+    }
+
+    public void clickLoginMenu() {
+        clickElement(loginMenu);
     }
 
     public void inputUsername(String username) {
@@ -40,7 +48,19 @@ public class LoginPage extends BasePage {
         clickElement(loginButton);
     }
 
-    public String getErrorMessage() {
-        return getElementText(errorMessage);
+    public void loginWithCredential(String username, String password) {
+        clickLoginMenu();
+        inputUsername(username);
+        inputPassword(password);
+        clickLoginButton();
+    }
+
+    public String getLoggedInUsername() {
+        wait.until(ExpectedConditions.visibilityOf(nameOfUser));
+        return getElementText(nameOfUser);
+    }
+
+    public String getAlertText() {
+        return getAlertTextAndAccept();
     }
 }
