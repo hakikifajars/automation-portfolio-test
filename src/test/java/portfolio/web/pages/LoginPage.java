@@ -34,6 +34,7 @@ public class LoginPage extends BasePage {
 
     public void clickLoginMenu() {
         clickElement(loginMenu);
+        wait.until(ExpectedConditions.visibilityOf(usernameField));
     }
 
     public void inputUsername(String username) {

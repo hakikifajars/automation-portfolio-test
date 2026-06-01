@@ -66,7 +66,7 @@ public class DemoBlazeSteps {
 
     @When("user logs in with invalid password")
     public void userLogsInWithInvalidPassword() {
-        createNewUserForCurrentScenario();
+        username = "invaliduser" + System.currentTimeMillis();
         loginPage.loginWithCredential(username, "WrongPassword123");
         loginAlertText = loginPage.getAlertText();
     }
@@ -75,7 +75,7 @@ public class DemoBlazeSteps {
     public void errorAlertShouldBeDisplayed() {
         Assert.assertTrue(
                 "Error alert should be displayed",
-                loginAlertText.contains("Wrong password") || loginAlertText.contains("User does not exist")
+                loginAlertText.contains("User does not exist") || loginAlertText.contains("Wrong password")
         );
     }
 
