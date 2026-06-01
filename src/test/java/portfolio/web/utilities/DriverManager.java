@@ -42,4 +42,11 @@ public class DriverManager {
             driver = null;
         }
     }
+
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
 }

@@ -5,6 +5,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import portfolio.web.utilities.DriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 
 public class LoginPage extends BasePage {
 
@@ -33,8 +34,10 @@ public class LoginPage extends BasePage {
     }
 
     public void clickLoginMenu() {
-        clickElement(loginMenu);
+        wait.until(ExpectedConditions.elementToBeClickable(loginMenu));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", loginMenu);
         wait.until(ExpectedConditions.visibilityOf(usernameField));
+        wait.until(ExpectedConditions.visibilityOf(passwordField));
     }
 
     public void inputUsername(String username) {
