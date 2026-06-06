@@ -41,3 +41,36 @@ Feature: Dummy API user automation test
     Given user prepares DummyAPI header
     When user sends request to create user without email
     Then API response status code should be 400
+
+  Scenario: Negative create user without first name
+    Given user prepares DummyAPI header
+    When user sends request to create user without first name
+    Then API response status code should be 400
+
+  Scenario: Negative create user with invalid email format
+    Given user prepares DummyAPI header
+    When user sends request to create user with invalid email
+    Then API response status code should be 400
+
+  Scenario: Negative get user with invalid id
+    Given user prepares DummyAPI header
+    When user sends request to get user with invalid id
+    Then API response status code should be 400 or 404
+
+  Scenario: Negative update user with invalid id
+    Given user prepares DummyAPI header
+    When user sends request to update user with invalid id
+    Then API response status code should be 400 or 404
+
+  Scenario: Negative delete user with invalid id
+    Given user prepares DummyAPI header
+    When user sends request to delete user with invalid id
+    Then API response status code should be 400 or 404
+
+  Scenario: Negative get users without app id
+    When user sends request to get list of users without app id
+    Then API response status code should be 403
+
+  Scenario: Negative get users with invalid app id
+    When user sends request to get list of users with invalid app id
+    Then API response status code should be 403

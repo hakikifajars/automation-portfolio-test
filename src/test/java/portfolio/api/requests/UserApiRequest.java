@@ -62,4 +62,21 @@ public class UserApiRequest {
                 .when()
                 .delete("/user/" + id);
     }
+
+    public Response getUsersWithoutAppId() {
+        return given()
+                .baseUri(baseUrl)
+                .queryParam("limit", 10)
+                .when()
+                .get("/user");
+    }
+
+    public Response getUsersWithInvalidAppId() {
+        return given()
+                .baseUri(baseUrl)
+                .header("app-id", "invalid-app-id")
+                .queryParam("limit", 10)
+                .when()
+                .get("/user");
+    }
 }
